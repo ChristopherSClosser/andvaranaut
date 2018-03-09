@@ -231,7 +231,8 @@ static Sprites drop(Sprites sprites, const Attack attack, const Point where)
 }
 
 // Hurts the closest sprite.
-Sprites xhurt(Sprites sprites, const Attack attack, const Hero hero, const Input in, const Inventory inv, const Surfaces ss, const int ticks)
+//  -const Inventory inv,
+Sprites xhurt(Sprites sprites, const Attack attack, const Hero hero, const Input in, const Surfaces ss, const int ticks)
 {
     if(!in.lu)
         return sprites;
@@ -263,12 +264,15 @@ Sprites xhurt(Sprites sprites, const Attack attack, const Hero hero, const Input
                     (attack.dir.x > 0.0f ? DEADW : DEADE):
                     (attack.dir.y > 0.0f ? DEADN : DEADS);
                 // Broke a lootbag?
-                if(sprite->ascii == 'd')
-                    if(!xitsadd(inv.items, xitrand(ss)))
-                        // Make this a log message in the future.
-                        printf("Inventory full!\n");
+                // ------------------------------------------
+                // if(sprite->ascii == 'd')
+                //     if(!xitsadd(inv.items, xitrand(ss)))
+                //         // Make this a log message in the future.
+                //         printf("Inventory full!\n");
+                // -------------------------------------------
                 // If a sprite is dead, the hurt counter resets, so this function is called again.
-                sprites = xhurt(sprites, attack, hero, in, inv, ss, ticks);
+                sprites = xhurt(sprites, attack, hero, in, ss, ticks);
+                // - inv,-------------------
                 // Chance sprite will drop loot bag.
                 return xd10() == 0 ? drop(sprites, attack, sprite->where) : sprites;
             }
