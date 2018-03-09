@@ -1,6 +1,6 @@
 #include "Tris.h"
 #include "World.h"
-#include "Inventory.h"
+// #include "Inventory.h"
 #include "util.h"
 
 int main(int argc, char* argv[])
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     Flow clouds = xstart(10.0f);
     Gauge gg = xgnew();
     Field fd = xprepare(wd.map[me.floor], me.aura);
-    Inventory inv = xinvnew();
+    // Inventory inv = xinvnew();--------------------
     // X-Resolution 512 reserved for performance testing.
     for(int renders = 0; args.xres == 512 ? renders < args.fps : !in.done; renders++)
     {
@@ -49,14 +49,15 @@ int main(int argc, char* argv[])
             current = xstream(current);
             clouds = xstream(clouds);
             me = xcaretake(wd.sprites[me.floor], me, wd.map[me.floor], fd, ticks);
-            inv = xinvselect(inv, in);
+            // inv = xinvselect(inv, in);------------
             xrender(sdl, me, wd.sprites[me.floor], wd.map[me.floor], current, clouds, ticks);
-            xdinv(sdl, inv);
-            xdbars(sdl, me, ticks);
+            // xdinv(sdl, inv);--------------
+            // xdbars(sdl, me, ticks);--------------
+            // ------------------------------------------------------------------
             if(xinvuse(in))
             {
                 SDL_SetRelativeMouseMode(SDL_FALSE);
-                xwhatis(inv, in, sdl.xres);
+                // xwhatis(inv, in, sdl.xres);-----------------
                 // TODO: Manage inventory here.
                 // TODO: Draw inventory here.
             }
@@ -67,8 +68,10 @@ int main(int argc, char* argv[])
                 gg = xgwind(gg, me.wep, in);
                 me = xsustain(me, wd.map[me.floor], in, current);
                 xdgauge(sdl, gg);
-                wd.sprites[me.floor] = xhurt(wd.sprites[me.floor], attack, me, in, inv, sdl.surfaces, ticks);
+                wd.sprites[me.floor] = xhurt(wd.sprites[me.floor], attack, me, in, sdl.surfaces, ticks);
+                // -inv from xhurt()list
             }
+            // -------------------------------------------------------------------
             xdmap(sdl, wd.map[me.floor], me.where);
         }
         xpresent(sdl);
