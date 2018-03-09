@@ -297,7 +297,8 @@ static void idle(const Sprites sprites, const int ticks)
     }
 }
 
-static Hero damage(Hero hero, const Sprites sprites, const int ticks)
+// - const Sprites sprites,
+static Hero damage(Hero hero, const int ticks)
 {
     const float wave = 0.5f * (sinf(3.1416f * ticks / 60.0f) + 1.0f);
     hero.hps = hero.hpsmax * wave;
@@ -315,5 +316,6 @@ Hero xcaretake(const Sprites sprites, const Hero hero, const Map map, const Fiel
     bound(sprites, map);
     // The hero must be damaged here since the sprites
     // header cannot be included in the hero header.
-    return damage(hero, sprites, ticks);
+    // - sprites,
+    return damage(hero, ticks);
 }
